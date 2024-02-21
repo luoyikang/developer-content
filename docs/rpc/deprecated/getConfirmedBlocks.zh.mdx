@@ -1,0 +1,46 @@
+---
+sidebarLabel: getConfirmedBlocks
+title: getConfirmedBlocks RPC方法
+hideTableOfContents: true
+altRoutes:
+  - /docs/rpc/getConfirmedBlocks
+  - /docs/rpc/http/getConfirmedBlocks
+---
+
+返回两个槽之间的已确认区块列表
+
+<Callout type={"warning"} title={"已废弃的方法"}>
+  此方法预计在 `solana-core` v2.0 中删除。请改用 [getBlocks](/docs/rpc/http/getblocks)。
+</Callout>
+
+<DocSideBySide>
+
+<DocLeftSide>
+
+### 参数
+
+- **start_slot** (`u64`, required): 起始槽，作为u64整数
+- **配置对象** (`object`, optional): 包含以下字段的配置对象:
+  - `commitment` (`string`, optional): [配置状态承诺](/docs/rpc/index.mdx#configuring-state-commitment)
+
+### 结果
+
+结果字段将是一个u64整数数组，列出了`start_slot`和`end_slot`之间的已确认区块，如果提供了`end_slot`，或者最新的已确认区块，包含在内。允许的最大范围是500,000个槽。
+
+</DocLeftSide>
+
+<DocRightSide>
+
+### 代码示例
+
+```bash
+curl http://localhost:8899 -X POST -H "Content-Type: application/json" -d '
+  {"jsonrpc": "2.0","id":1,"method":"getConfirmedBlocks","params":[5, 10]}
+'
+```
+### 响应
+```json
+{ "jsonrpc": "2.0", "result": [5, 6, 7, 8, 9, 10], "id": 1 }
+```
+</DocRightSide>
+</DocSideBySide>
