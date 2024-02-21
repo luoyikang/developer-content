@@ -1,0 +1,77 @@
+---
+sidebarLabel: getFeeCalculatorForBlockhash
+title: getFeeCalculatorForBlockhash RPC方法
+hideTableOfContents: true
+altRoutes:
+  - /docs/rpc/getFeeCalculatorForBlockhash
+  - /docs/rpc/http/getFeeCalculatorForBlockhash
+---
+
+返回与查询的块哈希相关联的费用计算器，如果块哈希已过期，则返回 `null`。
+
+<Callout type={"warning"} title={"已弃用方法"}>
+  预计此方法将在 `solana-core` v2.0 中移除。请改用
+  [isBlockhashValid](/docs/rpc/http/isBlockhashValid) 或
+  [getFeeForMessage](/docs/rpc/http/getFeeForMessage)。
+</Callout>
+
+<DocSideBySide>
+
+<DocLeftSide>
+
+### 参数
+
+- **query blockhash** (`string`, required): 作为base-58编码的字符串的查询块哈希
+- **配置对象** (`object`, optional): 包含以下字段的配置对象:
+
+<Field
+  name="commitment"
+  type="string"
+  optional={true}
+  href="/docs/rpc/index.mdx#configuring-state-commitment"
+></Field>
+
+<Field name="minContextSlot" type="number" optional={true}>
+  请求可以在其中进行评估的最小槽
+</Field>
+
+</DocLeftSide>
+
+<DocRightSide>
+
+### 代码示例
+
+```bash
+curl http://localhost:8899 -X POST -H "Content-Type: application/json" -d '
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "getFeeCalculatorForBlockhash",
+    "params": [
+      "GJxqhuxcgfn5Tcj6y3f8X4FeCDd2RQ6SnEMo1AAxrPRZ"
+    ]
+  }
+'
+```
+
+### 响应
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "context": {
+      "slot": 221
+    },
+    "value": {
+      "feeCalculator": {
+        "lamportsPerSignature": 5000
+      }
+    }
+  },
+  "id": 1
+}
+```
+
+</DocRightSide>
+</DocSideBySide>
