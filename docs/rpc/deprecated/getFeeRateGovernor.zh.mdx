@@ -1,0 +1,70 @@
+---
+sidebarLabel: getFeeRateGovernor
+title: getFeeRateGovernor RPC方法
+hideTableOfContents: true
+altRoutes:
+  - /docs/rpc/getFeeRateGovernor
+  - /docs/rpc/http/getFeeRateGovernor
+---
+
+从根银行返回费率调节器信息。
+
+<Callout type={"warning"} title={"已弃用方法"}>
+  预计此方法将在 `solana-core` v2.0 中移除。
+</Callout>
+
+<DocSideBySide>
+
+<DocLeftSide>
+
+### 参数
+
+**无**
+
+### 结果
+
+结果将是一个RpcResponse JSON对象，其 `value` 等于一个带有以下字段的 `object`:
+
+- `burnPercent: <u8>` - 要销毁的收费百分比
+- `maxLamportsPerSignature: <u64>` - 下一个槽可以达到的最大 `lamportsPerSignature` 值
+- `minLamportsPerSignature: <u64>` - 下一个槽可以达到的最小 `lamportsPerSignature` 值
+- `targetLamportsPerSignature: <u64>` - 群集的期望费率
+- `targetSignaturesPerSlot: <u64>` - 群集的期望签名率
+
+</DocLeftSide>
+
+<DocRightSide>
+
+### 代码示例
+
+```bash
+curl http://localhost:8899 -X POST -H "Content-Type: application/json" -d '
+  {"jsonrpc":"2.0","id":1, "method":"getFeeRateGovernor"}
+'
+```
+
+### 响应
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "context": {
+      "slot": 54
+    },
+    "value": {
+      "feeRateGovernor": {
+        "burnPercent": 50,
+        "maxLamportsPerSignature": 100000,
+        "minLamportsPerSignature": 5000,
+        "targetLamportsPerSignature": 10000,
+        "targetSignaturesPerSlot": 20000
+      }
+    }
+  },
+  "id": 1
+}
+```
+
+</DocRightSide>
+</DocSideBySide>
