@@ -1,0 +1,104 @@
+---
+sidebarLabel: getConfirmedTransaction
+title: getConfirmedTransaction RPC方法
+hideTableOfContents: true
+altRoutes:
+  - /docs/rpc/getConfirmedTransaction
+  - /docs/rpc/http/getConfirmedTransaction
+---
+
+返回已确认交易的交易详情
+
+<Callout type={"warning"} title={"已弃用方法"}>
+  预计此方法将在 `solana-core` v2.0 中移除。请改用
+  [getTransaction](/docs/rpc/http/getTransaction)。
+</Callout>
+
+<DocSideBySide>
+
+<DocLeftSide>
+
+### 参数
+
+- **transaction signature** (`string`, required): 作为base-58编码的字符串的交易签名
+- **配置对象** (`object`, optional): 包含以下字段的配置对象:
+
+<Field
+  name="commitment"
+  type="string"
+  optional={true}
+  href="/docs/rpc/index.mdx#configuring-state-commitment"
+></Field>
+
+<Field 
+  name="encoding"
+  type="string"
+  defaultValue="json"
+  optional={true}
+  href="/docs/rpc/index.mdx#parsed-responses"
+>
+
+账户数据的编码格式
+
+<Values values={["json", "base58", "base64", "jsonParsed"]} />
+
+<details>
+
+- `base58` 编码较慢，且仅限于少于129字节的账户数据。
+- `jsonParsed` 编码尝试使用特定于程序的指令解析器，在`transaction.message.instructions`列表中返回更易读和明确的数据。
+- 如果请求 `jsonParsed` 但找不到解析器，则指令会回退到常规的 `json` 编码（`accounts`、`data` 和 `programIdIndex` 字段）。
+
+</details>
+
+</Field>
+
+</DocLeftSide>
+
+<DocRightSide>
+
+### 代码示例
+
+```bash
+curl http://localhost:8899 -X POST -H "Content-Type: application/json" -d '
+  {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "getConfirmedTransaction",
+    "params": [
+      "2nBhEBYYvfaAe16UMNqRHre4YNSskvuYgx3M6E4JP1oDYvZEJHvoPzyUidNgNX5r9sTyN1J9UxtbCXy2rqYcuyuv",
+      "base64"
+    ]
+  }
+'
+```
+
+### 响应
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "meta": {
+      "err": null,
+      "fee": 5000,
+      "innerInstructions": [],
+      "postBalances": [499998932500, 26858640, 1, 1, 1],
+      "postTokenBalances": [],
+      "preBalances": [499998937500, 26858640, 1, 1, 1],
+      "preTokenBalances": [],
+      "status": {
+        "Ok": null
+      }
+    },
+    "slot": 430,
+    "transaction": [
+      "AVj7dxHlQ9IrvdYVIjuiRFs1jLaDMHixgrv+qtHBwz51L4/ImLZhszwiyEJDIp7xeBSpm/TX5B7mYzxa+fPOMw0BAAMFJMJVqLw+hJYheizSoYlLm53KzgT82cDVmazarqQKG2GQsLgiqktA+a+FDR4/7xnDX7rsusMwryYVUdixfz1B1Qan1RcZLwqvxvJl4/t3zHragsUp0L47E24tAFUgAAAABqfVFxjHdMkoVmOYaR1etoteuKObS21cc1VbIQAAAAAHYUgdNXR0u3xNdiTr072z2DVec9EQQ/wNo1OAAAAAAAtxOUhPBp2WSjUNJEgfvy70BbxI00fZyEPvFHNfxrtEAQQEAQIDADUCAAAAAQAAAAAAAACtAQAAAAAAAAdUE18R96XTJCe+YfRfUp6WP+YKCy/72ucOL8AoBFSpAA==",
+      "base64"
+    ]
+  },
+  "id": 1
+}
+```
+
+</DocRightSide>
+</DocSideBySide>
